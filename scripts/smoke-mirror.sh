@@ -14,7 +14,11 @@ cooknship-x86_64-unknown-linux-gnu.tar.gz
 "
 
 gh_cmd() {
-  env -u GH_TOKEN gh "$@"
+  if test -n "${GH_TOKEN:-}"; then
+    gh "$@"
+  else
+    env -u GH_TOKEN gh "$@"
+  fi
 }
 
 die() {

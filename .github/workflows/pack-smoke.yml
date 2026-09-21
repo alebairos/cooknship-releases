@@ -23,6 +23,7 @@ jobs:
       - name: Mirror asset smoke
         env:
           TAG: ${{ github.event.inputs.tag || 'v0.2.11' }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           chmod +x scripts/smoke-mirror.sh
