@@ -1,0 +1,29 @@
+name: pack-smoke
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to verify (default v0.2.11)
+        required: false
+        default: v0.2.11
+
+permissions:
+  contents: read
+
+jobs:
+  mirror-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Mirror asset smoke
+        env:
+          TAG: ${{ github.event.inputs.tag || 'v0.2.11' }}
+        run: |
+          set -euo pipefail
+          chmod +x scripts/smoke-mirror.sh
+          ./scripts/smoke-mirror.sh
